@@ -128,7 +128,7 @@ $$ \text{Revenue Risk} = \text{Volume} \times \text{AvgCost} \times (\alpha \cdo
 *   **AvgCost**: Business cost of a False Prediction ($150.00).
 *   **D**: Drift Score (0.0 - 1.0).
 *   **Alpha/Beta**: Correlation coefficients for feature vs. target drift.
-
+### Example: For a batch of 10,000 predictions with a 0.25 target drift score, the estimated revenue risk exceeds $375,000, triggering automatic rollback.
 ---
 
 ## Technology Stack
@@ -214,6 +214,6 @@ LIMIT 5;
 
 <div align="center">
   <p><strong>Developed by Salma S</strong></p>
-  <p>ML / MLOps Engineer</p>
+  <p>ML Engineering / MLOps Systems Project</p>
 </div>
 ```
