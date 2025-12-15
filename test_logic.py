@@ -1,17 +1,14 @@
-from app.core.analyzer import DriftAnalyzer
-import pandas as pd
-import os
+from fastapi.testclient import TestClient
+from app.main import app
 
-# Load the data you downloaded
-ref = pd.read_csv("data/housing_reference.csv")
-curr = pd.read_csv("data/housing_current.csv")
+client = TestClient(app)
 
-print(" Initializing Brain...")
-engine = DriftAnalyzer()
-
-print(" Running Analysis (This uses the CPU)...")
-results = engine.run_analysis(ref, curr)
-
-print(f"Analysis Complete!")
-print(f"Risk Level: {results['risk_level']}")
-print(f"Top Drifting Feature: {results['leaderboard'][0]['feature']}")
+def test_read_root():
+    """
+    Smoke test to verify the API is up and running.
+    Should return the index.html content (200 OK).
+    """
+    response = client.get("/")
+    assert response.status_code == 200
+    # Check if the HTML contains the title defined in dashboard.js/index.html
+    assert "ModelGuard" in response.text
