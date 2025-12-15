@@ -19,8 +19,11 @@ jobs:
           pip install -r requirements.txt
           
       - name: Download Data
+        # Ensure data exists so tests don't crash
         run: python scripts/download_data.py
         
       - name: Run Tests
-        # Using 'python -m' ensures the 'app' module is found correctly
-        run: python -m pytest
+        # The 'export' line fixes the "No module named app" error
+        run: |
+          export PYTHONPATH=$PYTHONPATH:.
+          python -m pytest
