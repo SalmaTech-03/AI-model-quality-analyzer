@@ -57,15 +57,20 @@
 
 ## Executive Summary
 
-**ModelGuard AI** is a production-style ML reliability system designed to detect data drift, enforce data contracts, and trigger deterministic remediation actions.
+**AI-model-quality-analyzer** is an ML reliability control-plane that enforces data contracts, detects statistically significant drift, and executes deterministic remediation actions in production-style pipelines.
 
-Unlike passive monitoring tools that only surface metrics, ModelGuard converts statistical signals into explicit operational decisions such as rollback, traffic shadowing, or ingestion rejection. It introduces a **Circuit Breaker** architecture designed to prevent catastrophic failure modes—specifically Target Drift—that aggregate metrics frequently fail to catch.
+Rather than treating observability as a dashboarding problem, ModelGuard encodes failure-handling logic directly into the system: invalid data is rejected, biased models are blocked, and high-risk deployments are rolled back automatically.
+
+This project demonstrates applied MLOps practices across data validation, model governance, statistical testing, and operational decisioning — the layers where real-world ML systems fail.
+
 
 ---
 
 ## Architectural Design
 
-The system follows a linear reliability pipeline, acting as middleware between data ingestion and model inference.
+AI-model-quality-analyzer is implemented as an independent reliability control plane positioned between data ingestion and model inference.
+
+This separation ensures that governance, drift detection, and remediation logic remain isolated from model code, enabling safer rollbacks, auditable decisions, and independent evolution of reliability policies without retraining models.
 
 ```mermaid
 flowchart LR
@@ -92,7 +97,7 @@ flowchart LR
 
 ## Comparative Analysis
 
-ModelGuard shifts the focus from observation to action.
+AI-model-quality-analyzer shifts the focus from observation to action.
 
 | Feature | Traditional Monitoring | ModelGuard AI |
 | :--- | :--- | :--- |
@@ -119,7 +124,7 @@ The platform converts statistical signals into binary operational actions using 
 
 ## Financial Risk Quantification
 
-ModelGuard translates technical drift metrics into estimated financial impact using a heuristic cost-basis model.
+AI-model-quality-analyzer translates technical drift metrics into estimated financial impact using a heuristic cost-basis model.
 
 $$ \text{Revenue Risk} = \text{Volume} \times \text{AvgCost} \times (\alpha \cdot D_{feature} + \beta \cdot D_{target}) $$
 
@@ -144,24 +149,20 @@ $$ \text{Revenue Risk} = \text{Volume} \times \text{AvgCost} \times (\alpha \cdo
 
 ---
 
-## Project Scope
+## System Boundaries & Guarantees
 
-ModelGuard is designed as a **production-style ML reliability control plane**.
+### ModelGuard is intentionally designed as a reliability and governance layer rather than a full inference-serving system.
 
-It focuses on governance, drift detection, and automated remediation logic — the layer responsible for deciding *when* models should be trusted, blocked, or rolled back.
+The platform guarantees:
+- Validated, schema-safe data ingestion
+  
+- Statistically justified drift detection
+  
+- Deterministic and explainable remediation decisions
+  
 
-### Intentional Design Choices
+Inference latency optimization and online serving are intentionally out of scope to preserve auditability, safety, and statistical rigor.
 
-- **Control-Plane Architecture**  
-  This system operates outside the real-time inference path to ensure decisions are auditable, explainable, and safe under failure conditions.
-
-- **Batch-Oriented Evaluation**  
-  Drift and fairness are evaluated on batches to prioritize statistical validity over low-latency execution.
-
-- **Deterministic Remediation Logic**  
-  Explicit rule-based decisioning is used to guarantee predictable and reviewable actions during high-risk events.
-
-These choices mirror how reliability and governance systems are deployed in regulated production environments.
 
 
 ---
@@ -193,8 +194,7 @@ docker-compose up --build
 ```
 
 ### SQL Analyst Interface
-
-ModelGuard exposes an embedded SQL engine for root-cause analysis on ingested batches.
+AI-model-quality-analyzer exposes an embedded SQL engine for root-cause analysis on ingested batches.
 
 **Endpoint:** `POST /api/sql`
 ```sql
@@ -223,6 +223,16 @@ LIMIT 5;
 ```
 
 ---
+
+## MLOps Practices Demonstrated
+
+##### - Data Contracts enforced via strict Pydantic schemas
+##### - Automated drift detection with statistical significance testing (KS test, p-values)
+##### - Model governance via fairness constraints (Disparate Impact Ratio)
+##### - Deployment safety through circuit breakers and rollback logic
+##### - Reproducible environments using Docker and pinned dependencies
+##### - Auditable state and decisions persisted in a relational store
+
 ```
 <div align="center">
   <p><strong>Developed by Salma S</strong></p>
