@@ -1,0 +1,13 @@
+name: Build Check
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Build Docker Image
+        # This checks if your Dockerfile is valid and dependencies install correctly
+        run: docker build . -t modelguard:latest
