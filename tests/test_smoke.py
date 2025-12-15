@@ -1,13 +1,13 @@
 from fastapi.testclient import TestClient
-from app.main import app
+from app.main import app  # This import works only if PYTHONPATH is set correctly
 
 client = TestClient(app)
 
 def test_app_starts():
     """
-    Smoke Test:
-    Verifies that the app can initialize and return the homepage.
+    Nuclear Smoke Test:
+    Verifies the app starts without crashing.
     """
     response = client.get("/")
-    # We expect 200, but any non-500 code means the app isn't crashing
+    # We expect 200 (OK) but getting anything other than 500 means it started
     assert response.status_code != 500
