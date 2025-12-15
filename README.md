@@ -233,7 +233,7 @@ LIMIT 5;
 ##### - Reproducible environments using Docker and pinned dependencies
 ##### - Auditable state and decisions persisted in a relational store
 
-```
+
 <div align="center">
   <p><strong>Developed by Salma S</strong></p>
   <p>ML Engineering / MLOps Systems Project</p>
