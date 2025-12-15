@@ -223,7 +223,7 @@ LIMIT 5;
 ```
 
 ---
-
+```
 <div align="center">
   <p><strong>Developed by Salma S</strong></p>
   <p>ML Engineering / MLOps Systems Project</p>
